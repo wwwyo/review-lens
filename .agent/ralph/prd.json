@@ -1,0 +1,197 @@
+{
+  "project": "review-lens",
+  "branchName": "ralph/review-lens-core-review-flow",
+  "description": "GitHub Pull Request の差分を読みやすく整理し、Claude Code CLI を使った要約・バグ検出・対話・コメント投稿までをローカル完結で行えるデスクトップレビューアプリを段階的に実装する。",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Tauri v2 と React の土台を整える",
+      "description": "開発者として Tauri v2 と React/TypeScript の実行基盤を整えたい。以降のレビュー機能を安定して追加できるようにするため。",
+      "acceptanceCriteria": [
+        "Tauri v2 と React/TypeScript の開発環境がこのリポジトリで起動できる",
+        "フロントエンドと Rust バックエンドの基本ディレクトリ構成が整理されている",
+        "起動手順が既存ドキュメントと矛盾しない",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Vite ベースの React/TypeScript フロントエンドと Tauri v2 の Rust バックエンドを初期化し、`pnpm build` と `cargo check --manifest-path src-tauri/Cargo.toml` を通過済み。"
+    },
+    {
+      "id": "US-002",
+      "title": "PR diff 取得コマンドを実装する",
+      "description": "レビュー担当者として GitHub PR の diff をアプリから取得したい。CLI を手作業で叩かずにレビュー対象を読み込めるようにするため。",
+      "acceptanceCriteria": [
+        "Rust 側に `gh pr diff` を呼び出す Tauri command がある",
+        "PR 番号を渡すと raw diff を取得でき、失敗時はエラーを呼び出し元へ返す",
+        "取得処理がフロントエンドから呼び出せる",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "diff を構造化データへ変換する",
+      "description": "レビュー担当者として取得した diff をファイル単位・ハンク単位で扱いたい。UI と AI 解析が同じ構造化データを共有できるようにするため。",
+      "acceptanceCriteria": [
+        "raw diff をファイル一覧と変更チャンクへ変換するパーサーがある",
+        "追加・削除・文脈行を区別した構造化データを返せる",
+        "パース失敗時の扱いが定義されている",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "ファイル一覧と unified diff UI を表示する",
+      "description": "レビュー担当者として PR の変更ファイル一覧と unified diff を一画面で見たい。GitHub より読みやすい導線で変更を追えるようにするため。",
+      "acceptanceCriteria": [
+        "構造化 diff を使ってファイル一覧を表示できる",
+        "選択したファイルの unified diff を表示できる",
+        "空状態と読み込み中状態が UI で判別できる",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Claude Code CLI で変更サマリを生成する",
+      "description": "レビュー担当者として変更全体の概要と主要リスクを自動要約したい。差分を読む前に全体像を短時間で把握するため。",
+      "acceptanceCriteria": [
+        "構造化 diff または raw diff を `claude -p --output-format json` に渡してサマリを生成できる",
+        "少なくとも変更概要とリスク分析を含む JSON をアプリ側で扱える",
+        "CLI 実行失敗時のエラーが UI で扱える形で返る",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "サマリ表示パネルを追加する",
+      "description": "レビュー担当者として AI が生成した要約を diff と並べて見たい。レビュー前の理解と優先順位付けを一画面で完結させるため。",
+      "acceptanceCriteria": [
+        "変更概要とリスク分析を表示するサマリパネルがある",
+        "サマリ未生成時と生成失敗時の状態が UI で判別できる",
+        "diff 表示と干渉しないレイアウトになっている",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "変更の論理グルーピングと読む順番提案を出す",
+      "description": "レビュー担当者としてファイル横断の変更を意味単位でまとめ、推奨の読む順番を知りたい。差分の追跡コストを下げるため。",
+      "acceptanceCriteria": [
+        "Claude Code CLI の出力として変更グループ一覧を取得できる",
+        "変更グループごとに関連ファイルと説明を保持できる",
+        "推奨の読む順番を UI で表示できる",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "バグ検出結果をインライン表示する",
+      "description": "レビュー担当者として高リスク箇所を diff 上で直接見たい。重要な懸念を見落とさずに重点レビューできるようにするため。",
+      "acceptanceCriteria": [
+        "Claude Code CLI の出力として severity・file・line・message を持つ指摘を扱える",
+        "high、medium、low などの重要度に応じた見た目で diff 上へ表示できる",
+        "対象行が存在しない場合のフォールバック表示がある",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "リネームと移動を検出する",
+      "description": "レビュー担当者としてファイル名変更や移動を通常の追加削除と区別して見たい。差分の意味を誤解せずにレビューするため。",
+      "acceptanceCriteria": [
+        "rename または move を判定できる diff 情報を保持できる",
+        "ファイル一覧で rename または move が視覚的に判別できる",
+        "通常の追加削除との差分表示が崩れない",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "変更単位のインラインチャットを実装する",
+      "description": "レビュー担当者として特定ファイルや変更箇所について AI に追加質問したい。意図や副作用をその場で掘り下げるため。",
+      "acceptanceCriteria": [
+        "ファイルまたは変更単位の文脈を渡してチャット要求を送れる",
+        "Claude Code CLI のセッション継続または同等の文脈保持方法を使える",
+        "チャット UI で質問と回答の往復を確認できる",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "GitHub へのコメント投稿を実装する",
+      "description": "レビュー担当者として見つけた懸念を GitHub PR に直接投稿したい。レビュー結果を手作業で転記せずに共有するため。",
+      "acceptanceCriteria": [
+        "個別コメントまたは一括投稿の少なくとも一方を GitHub PR へ送信できる",
+        "投稿対象のファイルや行番号を指定できる",
+        "投稿成功と失敗を UI で確認できる",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "レビュー進捗を追跡する",
+      "description": "レビュー担当者としてどのファイルを確認済みか管理したい。長い PR でもレビューの抜け漏れを減らすため。",
+      "acceptanceCriteria": [
+        "ファイル単位で未確認と確認済みを切り替えられる",
+        "確認状態がアプリ再表示後も保持される",
+        "進捗状態が UI で一覧できる",
+        "Verify in browser using agent-browser skill",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Codex レビューと懸念修正を完了する",
+      "description": "開発者として ここまでの実装全体を Codex でレビューし、実害のある懸念を解消したい。Ralph 実行の最後に品質上の穴を残さないため。",
+      "acceptanceCriteria": [
+        "US-001 から US-012 までの実装差分全体を対象に Codex review を実行する",
+        "レビューで出た実害のある懸念を修正し、未対応事項があれば notes に記録する",
+        "最終状態で主要フローに既知の blocker がない",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

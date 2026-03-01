@@ -34,3 +34,17 @@ pnpm tauri dev
 
 - 忖度しない。問題点やリスクがあれば率直に指摘する
 - コメントは「なぜ」を説明する場合にのみ書く
+
+## Ralph Workflow
+
+- Ralph runtime files live under `.agent/ralph/`
+- Main state files are `.agent/ralph/prd.json` and `.agent/ralph/progress.txt`
+- Each Ralph iteration should work on exactly one story
+- A story is not done until required quality checks pass
+- The final story in `.agent/ralph/prd.json` must be a Codex review and remediation story
+- The review story is not done until Codex review is complete, every finding is fixed, and required quality checks pass again
+- After finishing a story, update `.agent/ralph/prd.json` and append progress to `.agent/ralph/progress.txt`
+- Commit completed work with `feat: [Story ID] - [Story Title]`
+- Reusable learnings should be written back to the nearest relevant `AGENTS.md`
+- UI changes should be browser-verified using `agent-browser skill`
+- Reply with `<promise>COMPLETE</promise>` only when every story has `passes: true`

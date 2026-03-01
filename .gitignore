@@ -31,3 +31,5 @@ npm-debug.log*
 
 # Rust
 **/*.rs.bk
+
+!.agent/**

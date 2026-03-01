@@ -12,14 +12,14 @@ Devin Review的なAIコードレビューデスクトップアプリ。ローカ
 
 ## 技術選定
 
-| 項目 | 選定 | 理由 |
-|------|------|------|
-| アプリ基盤 | **Tauri v2** | 軽量(3-10MB)、安定、システムトレイ/通知対応。Electronは重すぎる。Electrobunはv1出たばかりで見送り |
-| フロントエンド | **React + TypeScript** | diff UIの自由度、エコシステム |
-| UI | **shadcn/ui** | カスタマイズ性、diffビューアの自作に適する |
-| AI | **Claude Code CLI** | `claude -p --output-format json` でサブスク定額利用 |
-| GitHub | **gh CLI** | PR diff取得、コメント投稿 |
-| diff解析 | **diff2html + カスタム** | 生diff→構造化データ変換 |
+| 項目           | 選定                     | 理由                                                                                              |
+| -------------- | ------------------------ | ------------------------------------------------------------------------------------------------- |
+| アプリ基盤     | **Tauri v2**             | 軽量(3-10MB)、安定、システムトレイ/通知対応。Electronは重すぎる。Electrobunはv1出たばかりで見送り |
+| フロントエンド | **React + TypeScript**   | diff UIの自由度、エコシステム                                                                     |
+| UI             | **shadcn/ui**            | カスタマイズ性、diffビューアの自作に適する                                                        |
+| AI             | **Claude Code CLI**      | `claude -p --output-format json` でサブスク定額利用                                               |
+| GitHub         | **gh CLI**               | PR diff取得、コメント投稿                                                                         |
+| diff解析       | **diff2html + カスタム** | 生diff→構造化データ変換                                                                           |
 
 ### VSCode拡張を不採用にした理由
 

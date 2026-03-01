@@ -1,0 +1,8 @@
+# Ralph Progress Log
+Started: Sun Mar  1 23:20:39 JST 2026
+---
+2026-03-01 23:35:10 JST | US-001 完了
+- React + TypeScript + Vite のフロントエンド基盤を追加
+- Tauri v2 の `src-tauri/` を初期化し、Rust crate 名とアプリ設定を review-lens 向けに調整
+- 検証: `pnpm build`
+- 検証: `CARGO_HOME=/tmp/cargo-home cargo check --manifest-path src-tauri/Cargo.toml`
