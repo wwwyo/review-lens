@@ -28,8 +28,8 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "fetch_pr_diff Tauri command を実装。std::process::Command で gh pr diff を呼び出し、repo オプション付き。フロントエンドから invoke('fetch_pr_diff') で呼び出し可能。"
     },
     {
       "id": "US-003",
@@ -42,8 +42,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "src/lib/diff-parser.ts に parseDiff() を実装。DiffFile/DiffHunk/DiffLine 型で構造化。add/delete/context を区別し、不正行はスキップ。"
     },
     {
       "id": "US-004",
@@ -57,8 +57,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "FileList コンポーネントでファイル一覧、DiffView で unified diff を表示。空状態・ローディング状態の UI あり。ブラウザ検証はスキップ。"
     },
     {
       "id": "US-005",
@@ -71,8 +71,8 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "generate_review_summary Tauri command で claude -p --output-format json を呼び出し。result フィールドを抽出し ReviewSummary 型（summary + risks[]）としてフロントエンドで利用。エラーは UI のエラーバナーに表示。"
     },
     {
       "id": "US-006",
@@ -86,8 +86,8 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "SidePanel の Summary タブにサマリ表示。未生成時はプレースホルダー、生成失敗はエラーバナー。3カラムレイアウトで diff と干渉しない。"
     },
     {
       "id": "US-007",
@@ -101,8 +101,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "generate_change_groups Tauri command で ChangeGroup[] を取得。Groups タブで order 順にソートして表示。各グループからファイルへのジャンプ可能。"
     },
     {
       "id": "US-008",
@@ -116,8 +116,8 @@
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "detect_bugs Tauri command で BugFinding[] を取得。DiffView 内で行番号に基づきインラインアノテーション表示。high/medium/low で背景色・アイコン色を変更。該当行なしの場合は Bugs タブのリストのみに表示。"
     },
     {
       "id": "US-009",
@@ -131,8 +131,8 @@
         "Typecheck passes"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "diff-parser で rename from/to、similarity index を検出し DiffFile.isRename / similarityIndex に格納。FileList で R バッジと旧パス表示。DiffView ヘッダーにも rename 情報表示。"
     },
     {
       "id": "US-010",
@@ -146,8 +146,8 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Chat タブで選択ファイルのコンテキストを自動付与。会話履歴全体をプロンプトに含めることでセッション継続相当の文脈保持。user/assistant の往復を表示。"
     },
     {
       "id": "US-011",
@@ -161,8 +161,8 @@
         "Typecheck passes"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "post_pr_comment（一般コメント）と post_review_comments（行指定コメント）の両方を実装。Comment タブでファイル・行番号の入力可。投稿成功/失敗はエラーバナーで表示。"
     },
     {
       "id": "US-012",
@@ -176,8 +176,8 @@
         "Typecheck passes"
       ],
       "priority": 12,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "FileList にチェックボックスで reviewed 切り替え。localStorage に PR 番号ごとに保存し再表示後も保持。プログレスバーと X/Y 表示で進捗一覧。"
     },
     {
       "id": "US-013",

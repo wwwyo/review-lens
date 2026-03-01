@@ -6,3 +6,17 @@ Started: Sun Mar  1 23:20:39 JST 2026
 - Tauri v2 の `src-tauri/` を初期化し、Rust crate 名とアプリ設定を review-lens 向けに調整
 - 検証: `pnpm build`
 - 検証: `CARGO_HOME=/tmp/cargo-home cargo check --manifest-path src-tauri/Cargo.toml`
+
+2026-03-01 | US-002〜US-012 一括完了
+- US-002: fetch_pr_diff Tauri command（gh pr diff 呼び出し、repo オプション対応）
+- US-003: src/lib/diff-parser.ts に parseDiff() 実装（DiffFile/DiffHunk/DiffLine 構造化）
+- US-004: FileList + DiffView コンポーネント（3カラムレイアウト、空・ローディング状態対応）
+- US-005: generate_review_summary Tauri command（claude -p --output-format json → ReviewSummary 型）
+- US-006: SidePanel Summary タブ（変更概要 + リスク分析表示、未生成/失敗状態 UI）
+- US-007: generate_change_groups Tauri command + Groups タブ（order 順ソート、ファイルジャンプ）
+- US-008: detect_bugs Tauri command + DiffView 内インラインアノテーション（severity 別色分け）
+- US-009: diff-parser で rename from/to + similarity index 検出、FileList に R/N/D バッジ
+- US-010: Chat タブ（選択ファイルコンテキスト自動付与、会話履歴による文脈保持）
+- US-011: post_pr_comment + post_review_comments（一般コメント + 行指定コメント）
+- US-012: FileList チェックボックス + localStorage 永続化 + プログレスバー
+- 検証: `pnpm build` 成功、`cargo check` 成功

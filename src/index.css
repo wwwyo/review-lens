@@ -7,10 +7,7 @@
   --muted: #8d7659;
   --border: rgba(86, 67, 41, 0.14);
   color: var(--ink-strong);
-  background:
-    radial-gradient(circle at top left, rgba(203, 142, 71, 0.22), transparent 30%),
-    radial-gradient(circle at 80% 20%, rgba(170, 96, 74, 0.18), transparent 24%),
-    linear-gradient(180deg, #f5efe4 0%, #efe4d1 55%, #e7d9c0 100%);
+  background: #f5efe4;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -27,6 +24,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: transparent;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 button,
